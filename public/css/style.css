@@ -13,16 +13,16 @@ h1 {
 
 ul {
   list-style: none;
-  padding: 0;
+  padding: 5px;
 }
 
-li {
+/* li {
   background: white;
   margin: 10px 0;
   padding: 15px;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
+} */
 
 a {
   color: #007bff;
@@ -31,4 +31,17 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+#hero-list {
+ 
+  display: flex;
+  flex-wrap:wrap;
+  justify-content: center;
+  overflow: auto;
+   transition:all 2s ease;
+} 
+#hero-list ul:hover {
+ 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin: 10px;
 }
