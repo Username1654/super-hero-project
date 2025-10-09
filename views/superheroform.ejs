@@ -1,59 +1,4 @@
 <!-- views/form.ejs  -->
-<%
-// Define form field configurations
-const firstNameConfig = {
-  id: 'firstName',
-  name: 'firstName',
-  label: 'First Name',
-  type: 'text',
-  pattern: '^[A-Za-z]{2,50}$',
-  icon: 'person',
-  autocomplete: 'given-name',
-  helpText: 'Only letters, 2-50 characters',
-  required: true,
-  value: "First"
-};
-
-const realNameConfig = {
-  id: 'realName',
-  name: 'realName',
-  label: 'Last Name',
-  type: 'text',
-  pattern: '^[A-Za-z]{2,50}$',
-  icon: 'person',
-  autocomplete: 'family-name',
-  helpText: 'Only letters, 2-50 characters',
-  required: true,
-  value: "Last"
-};
-
-const superPowerConfig = {
-  id: 'superPower',
-  name: 'superPower',
-  label: 'superPowers',
-  type: 'text',
-  pattern: '^[A-Za-z]{2,50}$',
-  icon: 'envelope',
-  autocomplete: 'email',
-  helpText: 'Enter a valid superPower',
-  required: true,
-  value: "flight"
-};
-
-const phoneConfig = {
-  id: 'powerLevel',
-  name: 'powerLevel',
-  label: 'powerLevel Number',
-  type: 'num',
-  pattern: '^[0-9]$',
-  icon: 'telephone',
-  autocomplete: '10',
-  helpText: '1-10',
-  required: true,
-  value: "10"
-};
-%>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -76,29 +21,76 @@ const phoneConfig = {
           </h2>
         </div>
         <div class="card-body">
-          <form id="registrationForm">
-            <%- include('partials/form-input', firstNameConfig) %>
-            <%- include('partials/form-input', realNameConfig) %>
-            <%- include('partials/form-input', superPowerConfig) %>
-            <%- include('partials/form-input', phoneConfig) %>
+            <form id="heroForm">
+              <label>Super Name:</label>
+              <i class="bi bi-pencil-square"></i>
+              <input type="text" value="super man" name="superName" pattern="^[a-zA-Z\s]{2,50}$" required><br>
 
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-              <button type="reset" class="btn btn-outline-secondary me-md-2">
-                <i class="bi bi-arrow-clockwise me-1"></i>
-                Reset Form
-              </button>
-              <button class="btn btn-primary" id="submitBtn" type="submit">
-                <i class="bi bi-person-check me-1"></i>
-                Create Account
-              </button>
-            </div>
-          </form>
+              <label>Real Name:</label>
+              <i class="bi bi-pencil-square"></i>
+              <input type="text" value="klark Kent" name="realName" pattern="^[a-zA-Z\s]{2,50}$" required><br>
+
+              <label>Superpower:</label>
+              <i class="bi bi-sun"></i>
+              <input type="text" value="flight" name="superpower" pattern="^[A-Za-z]{2,50}$" required><br>
+
+              <label>Power Level:</label>
+              <i class="bi bi-lightning"></i>
+              <input type="number" value="10" name="powerLevel" pattern="^{1,10}$" required maxlength="10"><br>
+
+              <label>Secret Identity:</label>
+              <i class="bi bi-person-fill-lock"></i>
+              <select name="secretIdentity">
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+              </select>
+              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button type="reset" class="btn btn-outline-secondary me-md-2">
+                  <i class="bi bi-arrow-clockwise me-1"></i>
+                  Reset Form
+                </button>
+                <button class="btn btn-primary" id="submitBtn" type="submit">
+                  <i class="bi bi-person-check me-1"></i>
+                  Add hero
+                </button>
+              </div>
+            </form>
+
+
+          <button id="redir">Hero List</button>
         </div>
       </div>
     </div>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="final-validation.js"></script>
-</body>
+  <script>
+     document.getElementById('redir').onclick = function() {
+      window.location.href = '/superherolist';
+    };
 
+    const form = document.getElementById('heroForm');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault(); // stop page reload
+
+  const formData = new FormData(form);
+  const data = Object.fromEntries(formData.entries());
+  const res = await fetch('/superheroform', {
+        method: 'POST',
+        headers: { 'Content-Type':'application/json' },
+        body: JSON.stringify(data)
+      });
+
+
+  const result = await res.json();
+  if (result.success) {
+    console.log('working')
+    form.reset(); // clear inputs
+  } else {
+    console.log("fail")
+  }
+});
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="final-validation.js"></script> -->
+</body>
 </html>

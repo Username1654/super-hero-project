@@ -1,12 +1,11 @@
 <!-- views/heroList.ejs -->
-<%const superHeroes = Superman = {superName: "SuperMan",realName: "Clark Kent",superPower: "Super strength, flying, lazer eyes, super breath, super vision and super hearing.",powerLevel: "10",secredIdentity: "yes",}%>
+<%const heroes = Superman = [{superName: "SuperMan",realName: "Clark Kent",superpower: "Super strength, flying, lazer eyes, super breath, super vision and super hearing.",powerLevel: "10",secredIdentity: "yes",},{superName: "SuperMan",realName: "Clark Kent",superpower: "Super strength, flying, lazer eyes, super breath, super vision and super hearing.",powerLevel: "10",secredIdentity: "yes",}];%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>super hero List</title>
-    <link rel="stylesheet" href="/css/style.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -17,31 +16,39 @@
     />
   </head>
   <body>
-    <div class="container">
-      <h1><i class="bi bi-emoji-sunglasses-fill"></i>
-        hero list
-      </h1>
-      <div class="row">
-        <div class="col-md-6 col-lg-4 mb-3" id="hero-<%= superHeroes.realName %>">
-          <div class="card">
-            <div class="card-body">
-              <div class="hero-display" id="display-<%= superHeroes.realName %>">
-                <h5 class="card-title">
-                  <i class="bi bi-person"></i><%= superHeroes.superName %>
-                </h5>
-            </div>
-          </div>
-        </div>
-          <div class="card" style="width: 18rem;">
-            <div class="card-body">
-              <h5 class="card-title"><%= superHeroes.realName %></h5>
-              <p class="card-text"><%= superHeroes.superPower %></p>
-            </div>
-          </div>
-        </div>
-      </div>
+    <h1>Heroes</h1>
+<div style="display: flex;">
+    <% heroes.forEach(hero => { %>
+      <ul class="list-group" style="width: 300px;">
+        <li class="list-group-item active">Super Name:<strong> <%= hero.superName %></strong></i>
+        <li class="list-group-item">Real Name:<strong> <%= hero.realName %></strong></i>
+        <li class="list-group-item">Superpower:<strong> <%= hero.superpower %></strong></i>
+        <li class="list-group-item">Power Level:<strong> <%= hero.powerLevel %></strong></i>
+        <li class="list-group-item"></i>
+          <button onclick="deleteHero('<%= hero._id %>')">Delete</button>
+      </ul>
+
+      <br>
+    <% }) %>
     </div>
+  <button type="button" id="redir">Add hero</button>
+  <script>
+    document.getElementById('redir').onclick = function() {
+      window.location.href = '/superheroform';
+    };
+function deleteHero(id) {
+  fetch(`/heroes/${id}`, { method: 'DELETE' })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        document.getElementById(`hero-${id}`).remove();
+      } else {
+        alert('Failed to delete hero');
+      }
+    })
+    .catch(err => console.error(err));
+}
+  </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/js/heroActions.js"></script>
   </body>
 </html>

@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let errorMessage = '';
 
     switch (fieldName) {
-      case 'firstName':
+      case 'secrettName':
         if (value.length === 0) {
           errorMessage = 'First name is required';
         } else if (value.length > 50) {
@@ -18,21 +18,32 @@ document.addEventListener('DOMContentLoaded', () => {
           errorMessage = 'First name must only include letters';
         }
         break;
+        case 'realName':
+          if (value.length === 0) {
+            errorMessage = 'real name is required';
+          } else if (value.length > 50) {
+            errorMessage = 'real name must be less than 50 characters';
+          } else if (value.length < 2) {
+            errorMessage = 'real name must be 2 or more characters';
+          } else {
+            errorMessage = 'real name must only include letters';
+          }
+          break;
 
-      case 'email':
+      case 'superPower':
         if (value.length === 0) {
-          errorMessage = 'Email address is required';
+          errorMessage = 'super address is required';
         } else {
-          errorMessage = 'Please enter a valid email address';
+          errorMessage = 'Please enter a valid superPower address';
         }
         break;
 
-      case 'phone':
+      case 'powerLevel':
         if (value.length === 0) {
-          errorMessage = 'Phone number is required';
+          errorMessage = 'powerLevel number is required';
         } else {
           errorMessage =
-            'Please enter a valid phone number (format: 123-456-7890)';
+            'Please enter a valid powerLevel';
         }
         break;
 

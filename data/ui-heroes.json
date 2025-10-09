@@ -4,7 +4,6 @@
         "superName": "Spider-Man",
         "realName": "Peter Parker",
         "superpower": "Web-Slinging",
-        "powerLevel": 8,
-        "secretIdentity": true
+        "powerLevel": 8
     }
 ]
