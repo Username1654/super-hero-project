@@ -43,6 +43,7 @@ function deleteHero(id) {
     .then(res => res.json())
     .then(data => {
       if (data.success) {
+        document.getElementById(`hero-${id}`).remove();
       } else {
         alert('Failed to delete hero');
       }

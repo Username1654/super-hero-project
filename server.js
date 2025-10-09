@@ -1,17 +1,13 @@
 const express = require('express');
-const fs = require('fs').promises;
-const path = require('path');
 require('dotenv').config();
 const app = express();
-const { MongoClient, ObjectId} = require('mongodb');
-const client = new MongoClient(process.env.MONGODB_URI);
+const { MongoClient} = require('mongodb');
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
-// Helper function to read heroes
-// console.log('MongoDB URI:', process.env.MONGODB_URI);
 
 MongoClient.connect(process.env.MONGODB_URI)
 .then((client) => {
@@ -22,7 +18,7 @@ heroes = db.collection('heroes');
 .catch((error) => console.error('❌ MongoDB Error', error));
 
 
-app.get('/', (req, res) => {
+app.get('/', (req, res) => {S
 res.render('adminlog');
 })
 app.get("/superheroform", (req,res)=>{
